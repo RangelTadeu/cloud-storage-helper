@@ -1,0 +1,18 @@
+version: '3.6'
+
+services:
+  localstack:
+    container_name: localstack
+    environment:
+      - DEBUG=1
+      - LOCALSTACK_HOSTNAME=localhost
+      - TEST_AWS_ACCOUNT_ID=000000000000
+      - AWS_DEFAULT_REGION=us-west-1
+      - DOCKER_HOST=unix:///var/run/docker.sock
+      - DATA_DIR=/tmp/localstack/data
+      - SERVICES=s3
+    image: localstack/localstack:latest
+    ports:
+      - "4566:4566"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
