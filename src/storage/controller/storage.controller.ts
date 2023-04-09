@@ -1,11 +1,11 @@
 import { Body, Controller, Inject, Post } from '@nestjs/common';
 
-import { IStorage } from './interfaces/storage.interface';
+import { IStorage } from '../interfaces/storage.interface';
 import {
   CompleteUploadDTO,
   GetUploadUrlDTO,
   StartUploadDTO,
-} from './dto/storage.dto';
+} from '../dto/storage.dto';
 
 @Controller('storage')
 export class StorageController {
