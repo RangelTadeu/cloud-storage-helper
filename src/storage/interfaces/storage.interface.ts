@@ -2,7 +2,7 @@ export interface IStorage {
   getPresignUrl(params: IGetPresignUrlParams): Promise<string>;
   startMultiPartUpload(params: any): Promise<string>;
   completeMultiPartUpload(params: any): Promise<string>;
-  get(params: IGetFile): Promise<ReadableStream | undefined | string>;
+  get(params: GetFile): Promise<ReadableStream | undefined | string>;
   upload(params: IUpload): Promise<string>;
   uploadPart(params: any);
 }
@@ -21,9 +21,14 @@ export interface IGetPresignUrlParams extends IBaseParams {
 
 export type IStartMultiPartUploadParams = IBaseParams;
 
+export type Part = {
+  partNumber: number;
+  tag: string;
+};
+
 export interface ICompleteMultiPartUploadParams extends IBaseParams {
   uploadId: string;
-  uploadedParts: any[];
+  uploadedParts: Part[];
 }
 
 export interface IUploadPart extends IBaseParams {
@@ -36,4 +41,4 @@ export interface IUpload extends IBaseParams {
   data: any;
 }
 
-export type IGetFile = IBaseParams;
+export type GetFile = IBaseParams;
