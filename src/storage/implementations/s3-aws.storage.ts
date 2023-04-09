@@ -12,7 +12,7 @@ import {
 } from '@aws-sdk/client-s3';
 import {
   ICompleteMultiPartUploadParams,
-  IGetFile,
+  GetFile,
   IGetPresignUrlParams,
   IStartMultiPartUploadParams,
   IStorage,
@@ -55,7 +55,9 @@ export class S3Storage implements IStorage {
       s3Params.UploadId = UploadId;
     }
 
-    const presignedUrl = await getSignedUrl(this.client, s3Params, {
+    const command = new PutObjectCommand(s3Params);
+
+    const presignedUrl = await getSignedUrl(this.client, command, {
       expiresIn: expiration || AN_HOUR,
     });
 
@@ -88,8 +90,13 @@ export class S3Storage implements IStorage {
       repository,
       fileName: Key,
       uploadId: UploadId,
-      uploadedParts: Parts,
+      uploadedParts,
     } = params;
+
+    const Parts = uploadedParts.map((p) => ({
+      ETag: p.tag,
+      PartNumber: p.partNumber,
+    }));
 
     const s3Params: CompleteMultipartUploadCommandInput = {
       Bucket: repository ?? this.config.bucket,
@@ -109,7 +116,7 @@ export class S3Storage implements IStorage {
     return ETag;
   }
 
-  async get(params: IGetFile): Promise<string | ReadableStream<any>> {
+  async get(params: GetFile): Promise<string | ReadableStream<any>> {
     const { repository, fileName: Key } = params;
 
     try {

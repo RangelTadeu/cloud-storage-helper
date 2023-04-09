@@ -119,7 +119,7 @@ describe('s3 storage', () => {
     await storage.completeMultiPartUpload({
       fileName: 'test.txt',
       uploadId,
-      uploadedParts: [{ ETag: '1', PartNumber: 1 }],
+      uploadedParts: [{ tag: '1', partNumber: 1 }],
     });
 
     expect(res).toEqual({ partNumber: 1, tag: '1' });
