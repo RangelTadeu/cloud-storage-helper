@@ -1,10 +1,12 @@
 export interface IStorage {
   getPresignUrl(params: IGetPresignUrlParams): Promise<string>;
-  startMultiPartUpload(params: any): Promise<string>;
-  completeMultiPartUpload(params: any): Promise<string>;
+  startMultiPartUpload(params: IStartMultiPartUploadParams): Promise<string>;
+  completeMultiPartUpload(
+    params: ICompleteMultiPartUploadParams,
+  ): Promise<string>;
   get(params: GetFile): Promise<ReadableStream | undefined | string>;
   upload(params: IUpload): Promise<string>;
-  uploadPart(params: any);
+  uploadPart(params: IUploadPart);
 }
 
 interface IBaseParams {
