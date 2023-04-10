@@ -7,6 +7,8 @@
 
 ## Description
 
+A Nest API with a helper to handle with cloud storage operation.
+
 ## Installation
 
 ```bash
